@@ -57,6 +57,27 @@ describe( 'distributions-truncated-normal-pdf', function tests() {
 		}
 	});
 
+	it( 'should throw an error if provided a minimum support `a` exceeding the maximum support `b`', function test() {
+		var values = [
+			[ 2, 1 ],
+			[ -2, -3 ],
+			[ -0.3, -0.4 ],
+			[ 1.3, 1 ]
+		];
+
+		for ( var i = 0; i < values.length; i++ ) {
+			expect( badValue( values[i] ) ).to.throw( Error );
+		}
+		function badValue( value ) {
+			return function() {
+				pdf( 2, {
+					'a': value[ 0 ],
+					'b': value[ 1 ]
+				});
+			};
+		}
+	});
+
 	it( 'should throw an error if provided an array and an unrecognized/unsupported data type option', function test() {
 		var values = [
 			'beep',

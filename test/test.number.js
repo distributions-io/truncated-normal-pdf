@@ -50,6 +50,11 @@ describe( 'number pdf', function tests() {
 		}
 	});
 
+	it( 'should return `0` if provided an `x` outside `[a,b]` as input', function test() {
+		assert.strictEqual( pdf( a - 2, a, b, mu, sigma ), 0 );
+		assert.strictEqual( pdf( b + 2, a, b, mu, sigma ), 0 );
+	});
+
 	it( 'should return `NaN` if provided `NaN` as input', function test() {
 		assert.isTrue( isnan( pdf( NaN, a, b, mu, sigma ) ) );
 	});
