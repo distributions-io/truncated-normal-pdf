@@ -106,12 +106,13 @@ describe( 'validate', function tests() {
 		}
 	});
 
-	it( 'should return an error if provided a `sigma` parameter which is not a non-negative number', function test() {
+	it( 'should return an error if provided a `sigma` parameter which is not a positive number', function test() {
 		var values, err;
 		 values = [
 			-0.2,
 			-3,
 			'5',
+			0,
 			[],
 			true,
 			undefined,
