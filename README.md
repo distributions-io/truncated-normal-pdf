@@ -13,7 +13,7 @@ The [probability density function][density-function] (PDF) for a [truncated norm
 	<br>
 </div>
 
-where `mu` is the location  and `sigma > 0` is the scale parameter of the distribution. `a` and `b` are the minimum and maximum support, respectively.
+where `Phi` and `phi` denote the [cumulative distribution function][cdf] and [density function][density-function] of the [normal][normal] distribution, respectively, `mu` is the location  and `sigma > 0` is the scale parameter of the distribution. `a` and `b` are the minimum and maximum support.
 
 ## Installation
 
@@ -386,4 +386,6 @@ Copyright &copy; 2016. The [Compute.io](https://github.com/compute-io) Authors.
 [github-issues-url]: https://github.com/distributions-io/truncated-normal-pdf/issues
 
 [truncated-normal]: https://en.wikipedia.org/wiki/Truncated_normal_distribution
+[normal]: https://en.wikipedia.org/wiki/Normal_distribution
 [density-function]: https://en.wikipedia.org/wiki/Probability_density_function
+[cdf]: https://en.wikipedia.org/wiki/Cumulative_distribution_function
