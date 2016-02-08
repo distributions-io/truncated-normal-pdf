@@ -26,7 +26,7 @@ var expect = chai.expect,
 
 describe( 'number pdf', function tests() {
 
-	var	validationData = require( './fixtures/number.json' ),
+	var validationData = require( './fixtures/number.json' ),
 		data = validationData.data,
 		expected = validationData.expected.map( function( d ) {
 			return d === 'Inf' ? Infinity : d;
