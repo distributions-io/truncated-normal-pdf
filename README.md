@@ -7,8 +7,9 @@ Probability Density Function
 The distribution of a normally distributed random variable `X` conditional on `a < X < b`  is a [truncated normal][truncated-normal] distribution.
 The [probability density function][density-function] (PDF) for a [truncated normal][truncated-normal] random variable is
 
-<div class="equation" align="center" data-raw-text="f(x;\mu,\sigma)=\frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{(x - \mu)^2}{2 \sigma^2}}" data-equation="eq:pdf_function">
-	<img src="" alt="Probability density function (PDF) for a truncated normal distribution.">
+<div class="equation" align="center" data-raw-text="f(x;\mu,\sigma,a,b) =  \begin{cases} \frac{\frac{1}{\sigma}\phi(\frac{x - \mu}{\sigma})}{\Phi(\frac{b - \mu}{\sigma}) - \Phi(\frac{a - \mu}{\sigma}) } &amp; \text{ if } a < x < b \\ 0 &amp; \text{ otherwise }
+\end{cases}" data-equation="eq:pdf_function">
+	<img src="https://cdn.rawgit.com/distributions-io/truncated-normal-pdf/420be8917ad8ff8b29d3f21f88744581bbff9445/docs/img/eqn.svg" alt="Probability density function (PDF) for a truncated normal distribution.">
 	<br>
 </div>
 
