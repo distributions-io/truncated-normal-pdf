@@ -32,7 +32,7 @@ var pdf = require( 'distributions-truncated-normal-pdf' );
 
 #### pdf( x[, options] )
 
-Evaluates the [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) (PDF) for the [normal](https://en.wikipedia.org/wiki/Normal_distribution) distribution. `x` may be either a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays), or a [`matrix`](https://github.com/dstructs/matrix).
+Evaluates the [probability density function][density-function] (PDF) for the [truncated normal][truncated-normal] distribution. `x` may be either a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays), or a [`matrix`](https://github.com/dstructs/matrix).
 
 ``` javascript
 var matrix = require( 'dstructs-matrix' ),
@@ -42,28 +42,37 @@ var matrix = require( 'dstructs-matrix' ),
 	i;
 
 out = pdf( 1 );
-// returns;
+// returns 0.242
 
 out = pdf( -1 );
-// returns;
+// returns 0.242
 
 x = [ 0, 0.5, 1, 1.5, 2, 2.5 ];
 out = pdf( x );
-// returns;
+// returns [ ~0.399, ~0.352, ~0.242, 0.13, ~0.054, ~0.018 ]
 
 x = new Float32Array( x );
 out = pdf( x );
-// returns;
+// returns Float64Array( [~0.399,~0.352,~0.242,0.13,~0.054,~0.018] )
 
 x = new Float64Array( 6 );
 for ( i = 0; i < 6; i++ ) {
 	x[ i ] = i*0.5;
 }
 mat = matrix( x, [3,2], 'float64' );
-// returns;
+/*
+	[ 0 0.5
+	  1 1.5
+	  2 2.5 ]
+*/
 
 out = pdf( mat );
-// returns;
+/*
+	[ ~0.399 ~0.352
+	  ~0.242 0.13
+	  ~0.054 ~0.018 ]
+*/
+
 ```
 
 The function accepts the following `options`:
@@ -85,11 +94,12 @@ var x = [ 0, 0.5, 1, 1.5, 2, 2.5 ];
 
 var out = pdf( x, {
 	'a': -5,
-	'b': 5
+	'b': 5,
 	'mu': 2,
 	'sigma': 2,
 });
-// returns;
+// returns [ 0.13, ~0.161, ~0.189, ~0.207, ~0.214, ~0.207 ]
+
 ```
 
 For non-numeric `arrays`, provide an accessor `function` for accessing `array` values.
@@ -111,7 +121,8 @@ function getValue( d, i ) {
 var out = pdf( data, {
 	'accessor': getValue
 });
-// returns;
+// returns [ ~0.399, ~0.352, ~0.242, 0.13, ~0.054, ~0.018 ]
+
 ```
 
 
@@ -133,12 +144,12 @@ var out = pdf( data, {
 });
 /*
 	[
-		{'x':[0,]},
-		{'x':[1,]},
-		{'x':[2,]},
-		{'x':[3,]},
-		{'x':[4,]},
-		{'x':[5,]}
+		{'x':[0,~0.399]},
+		{'x':[1,~0.352]},
+		{'x':[2,~0.242]},
+		{'x':[3,0.13]},
+		{'x':[4,~0.054]},
+		{'x':[5,~0.018]}
 	]
 */
 var bool = ( data === out );
@@ -157,7 +168,7 @@ out = pdf( x, {
 	'sigma': 2,
 	'dtype': 'int32'
 });
-// returns;
+// returns Int32Array( [0,0,0,0,0] )
 
 // Works for plain arrays, as well...
 out = pdf( [0,0.5,1,1.5,2], {
@@ -165,7 +176,8 @@ out = pdf( [0,0.5,1,1.5,2], {
 	'sigma': 2,
 	'dtype': 'uint8'
 });
-// returns;
+// returns Uint8Array( [0,0,0,0,0] )
+
 ```
 
 By default, the function returns a new data structure. To mutate the input data structure (e.g., when input values can be discarded or when optimizing memory usage), set the `copy` option to `false`.
@@ -182,7 +194,7 @@ x = [ 0, 0.5, 1, 1.5, 2 ];
 out = pdf( x, {
 	'copy': false
 });
-// returns;
+// returns [ ~0.399, ~0.352, ~0.242, 0.13, ~0.054 ]
 
 bool = ( x === out );
 // returns true
@@ -191,13 +203,21 @@ x = new Int16Array( 6 );
 for ( i = 0; i < 6; i++ ) {
 	x[ i ] = i*0.5;
 }
-mat = matrix( x, [3,2], 'int16' );
-// returns;
+mat = matrix( x, [3,2], 'float32' );
+/*
+	[ 0 0
+	  1 1
+	  2 2 ]
+*/
 
 out = pdf( mat, {
 	'copy': false
 });
-// returns;
+/*
+	[ ~0.399 ~0.399
+	  ~0.242 ~0.242
+	  ~0.054 ~0.054 ]
+*/
 
 bool = ( mat === out );
 // returns true
